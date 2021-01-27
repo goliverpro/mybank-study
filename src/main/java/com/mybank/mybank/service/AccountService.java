@@ -3,9 +3,11 @@ package com.mybank.mybank.service;
 import com.mybank.mybank.domain.Account;
 import com.mybank.mybank.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AccountService {
 
     @Autowired

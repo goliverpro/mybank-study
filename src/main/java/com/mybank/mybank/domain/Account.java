@@ -15,13 +15,14 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String typeAccount; //criar um tipo enumerado para o type account
     private Double balance;
     private Double boundary;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    private List<Client> user = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "client_id" )
+    private Client client;
 
     public Account(){
 
@@ -66,6 +67,14 @@ public class Account implements Serializable {
         this.boundary = boundary;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,4 +87,5 @@ public class Account implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

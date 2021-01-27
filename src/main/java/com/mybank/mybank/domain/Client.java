@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_client")
@@ -16,14 +13,14 @@ public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String document;
     private Date birthDate;
     private String cellPhone;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @OneToMany(mappedBy = "client")
+    private List<Account> account = new ArrayList<>();
 
 
     public Client(){
@@ -36,6 +33,7 @@ public class Client implements Serializable {
         this.document = document;
         this.birthDate = birthDate;
         this.cellPhone = cellPhone;
+
     }
 
     public Long getId() {
@@ -78,9 +76,13 @@ public class Client implements Serializable {
         this.cellPhone = cellPhone;
     }
 
-    /*public List<Account> getAccount() {
+    public List<Account> getAccount() {
         return account;
-    }*/
+    }
+
+    public void addAccount(Account obj){
+        account.add(obj);
+    }
 
 
     @Override
@@ -95,4 +97,5 @@ public class Client implements Serializable {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }
