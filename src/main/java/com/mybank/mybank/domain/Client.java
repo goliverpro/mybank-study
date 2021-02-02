@@ -19,6 +19,7 @@ public class Client implements Serializable {
     private Date birthDate;
     private String cellPhone;
 
+
     @OneToMany(mappedBy = "client")
     private List<Account> account = new ArrayList<>();
 

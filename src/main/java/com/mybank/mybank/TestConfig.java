@@ -26,10 +26,12 @@ public class TestConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception{
 
+
         Account account = new Account(null, "corrente", 200.00, 100.00);
         Account account2 = new Account(null, "poupança", 500.00, 0.00);
         Account account3 = new Account(null, "corrente", 500.00, 1200.00);
         Account account4 = new Account(null, "poupança", 900.00, 90.00);
+
         repository.saveAll(Arrays.asList(account, account2,account3,account4));
 
         Client client1 = new Client(null, "Maria Brown", "1234567", null, "99999999");
@@ -38,8 +40,14 @@ public class TestConfig implements CommandLineRunner {
         client1.getAccount().addAll(Arrays.asList(account, account2));
         client2.getAccount().addAll(Arrays.asList(account3, account4));
 
-
         clientRepository.saveAll(Arrays.asList(client1, client2));
+
+        account.setClient(client1);
+        account2.setClient(client1);
+        account3.setClient(client2);
+        account4.setClient(client2);
+        repository.saveAll(Arrays.asList(account, account2,account3,account4));
+
 
         System.out.println("test");
     }
