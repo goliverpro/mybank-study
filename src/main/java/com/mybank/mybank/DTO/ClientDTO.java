@@ -1,19 +1,20 @@
-package com.mybank.mybank.domain;
+package com.mybank.mybank.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import com.mybank.mybank.domain.Account;
+import com.mybank.mybank.domain.Client;
+
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "tb_client")
-public class Client implements Serializable {
+public class ClientDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private String name;
@@ -21,22 +22,27 @@ public class Client implements Serializable {
     private Date birthDate;
     private String cellPhone;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "client")
-    private List<Account> account = new ArrayList<>();
+    private List<AccountDTO> account = new ArrayList<>();
 
-
-    public Client(){
+    public ClientDTO(){
 
     }
 
-    public Client(Long id, String name, String document, Date birthDate, String cellPhone) {
+    public ClientDTO(Long id, String name, String document, Date birthDate, String cellPhone) {
         this.id = id;
         this.name = name;
         this.document = document;
         this.birthDate = birthDate;
         this.cellPhone = cellPhone;
+    }
 
+    public ClientDTO(Client obj){
+        setId(obj.getId());
+        setName(obj.getName());
+        setDocument(obj.getDocument());
+        setBirthDate(obj.getBirthDate());
+        setCellPhone(obj.getCellPhone());
+        account = obj.getAccount().stream().map(x -> new AccountDTO(x)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -79,26 +85,8 @@ public class Client implements Serializable {
         this.cellPhone = cellPhone;
     }
 
-    public List<Account> getAccount() {
+    public List<AccountDTO> getAccount() {
         return account;
-    }
-
-    public void addAccount(Account obj){
-        account.add(obj);
-    }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return id.equals(client.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 
 }

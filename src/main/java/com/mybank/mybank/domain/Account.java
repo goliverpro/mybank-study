@@ -20,7 +20,7 @@ public class Account implements Serializable {
     private Double balance;
     private Double boundary;
 
-    @JsonIgnore
+
     @ManyToOne
     @JoinColumn(name = "client_id" )
     private Client client;
