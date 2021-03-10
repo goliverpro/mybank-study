@@ -12,20 +12,19 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/client")
 public class ClientController {
 
     @Autowired
     private ClientService service;
 
-    @PostMapping
+    @RequestMapping(value = "/insert-client", method=RequestMethod.POST)
     public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO dto){
         service.insert(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{/id}").buildAndExpand(dto.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("{/login}").buildAndExpand(dto.getLogin()).toUri();
         return ResponseEntity.ok().body(dto);
     }
 
-    @GetMapping
+    @RequestMapping(value = "/all-clients", method=RequestMethod.GET)
     public ResponseEntity<List<ClientDTO>> findAll(){
         List<ClientDTO> clients = service.findAll();
         return ResponseEntity.ok().body(clients);

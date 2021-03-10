@@ -15,12 +15,13 @@ public class ClientDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 
-    private Long id;
+    private String login;
 
     private String name;
     private String document;
     private Date birthDate;
     private String cellPhone;
+    private String clientPassword;
 
     private List<AccountDTO> account = new ArrayList<>();
 
@@ -28,29 +29,31 @@ public class ClientDTO implements Serializable {
 
     }
 
-    public ClientDTO(Long id, String name, String document, Date birthDate, String cellPhone) {
-        this.id = id;
+    public ClientDTO(String login, String name, String document, Date birthDate, String cellPhone, String clientPassword) {
+        this.login = login;
         this.name = name;
         this.document = document;
         this.birthDate = birthDate;
         this.cellPhone = cellPhone;
+        this.clientPassword = clientPassword;
     }
 
     public ClientDTO(Client obj){
-        setId(obj.getId());
+        setLogin(obj.getLogin());
         setName(obj.getName());
         setDocument(obj.getDocument());
         setBirthDate(obj.getBirthDate());
         setCellPhone(obj.getCellPhone());
+        setClientPassword(obj.getClientPassword());
         account = obj.getAccount().stream().map(x -> new AccountDTO(x)).collect(Collectors.toList());
     }
 
-    public Long getId() {
-        return id;
+    public String getLogin() {
+        return login;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getName() {
@@ -83,6 +86,14 @@ public class ClientDTO implements Serializable {
 
     public void setCellPhone(String cellPhone) {
         this.cellPhone = cellPhone;
+    }
+
+    public String getClientPassword() {
+        return clientPassword;
+    }
+
+    public void setClientPassword(String clientPassword) {
+        this.clientPassword = clientPassword;
     }
 
     public List<AccountDTO> getAccount() {

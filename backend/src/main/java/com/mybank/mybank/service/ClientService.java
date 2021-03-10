@@ -9,7 +9,6 @@ import com.mybank.mybank.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class ClientService {
     private AccountRepository accountRepository;
 
     public ClientDTO insert(ClientDTO dto){
-        Client obj = new Client(null, dto.getName(), dto.getDocument(), dto.getBirthDate(), dto.getCellPhone());
+        Client obj = new Client(dto.getLogin(), dto.getName(), dto.getDocument(), dto.getBirthDate(), dto.getCellPhone(), dto.getClientPassword());
         obj = repository.save(obj);
         for(AccountDTO accountDTO : dto.getAccount()){
             Account account = new Account(accountDTO.getId(), accountDTO.getTypeAccount(), accountDTO.getBalance(), accountDTO.getBoundary());
